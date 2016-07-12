@@ -7,14 +7,13 @@ excerpt: oracle,dll,create table sql
 ---
 * content
 {:toc}
+##序
 
-# Oracle轻松取得建表和索引的DDL语句 #
+我们都知道在9i之前，要想获得建表和索引的语句是一件很麻烦的事。我们可以通过export with rows=no来得到，但它的输出因为格式的问题并不能直接拿来用。而另一种方法就是写复杂的脚本来查询数据字典，但这对于一稍微复杂的对象，如IOT和嵌套表等，还是无法查到。
 
-*我们都知道在9i之前，要想获得建表和索引的语句是一件很麻烦的事。我们可以通过export with rows=no来得到，但它的输出因为格式的问题并不能直接拿来用。而另一种方法就是写复杂的脚本来查询数据字典，但这对于一稍微复杂的对象，如IOT和嵌套表等，还是无法查到。*
-
-*从数据字典中获得DDL语句是经常要用的，特别是在系统升级/重建的时候。在Oracle 9i中，我们可以直接通过执行dbms_metadata从数据字典中查处DDL语句。使用这个功能强大的工具，我们可以获得单个对象或整个SCHEMA的DDL语句。最好不过的是因为它使用起来很简单。*
-
-**1、获得单个表和索引DDL语句的方法：**
+从数据字典中获得DDL语句是经常要用的，特别是在系统升级/重建的时候。在Oracle 9i中，我们可以直接通过执行dbms_metadata从数据字典中查处DDL语句。使用这个功能强大的工具，我们可以获得单个对象或整个SCHEMA的DDL语句。最好不过的是因为它使用起来很简单。
+---
+##1、获得单个表和索引DDL语句的方法：
     
     set heading off;
     
@@ -87,11 +86,11 @@ excerpt: oracle,dll,create table sql
     SQL> 
     
     SQL> spool off; 
+---
 
 
 
-
-2、获得整个SCHEMA DDL语句的方法：
+##2、获得整个SCHEMA DDL语句的方法：
 
 
 
@@ -119,7 +118,7 @@ excerpt: oracle,dll,create table sql
     
     spool off; 
 
+---
 
 
-
-**需要注意的是，当我们的表中有外健(参照约束)时，我们需要判别参照表之间的顺序，确保重建时按照合理的顺序进行。你可以通过查询dba_constraints and dba_cons_columns来确定各表之间的顺序，不再详述。**
+##需要注意的是，当我们的表中有外健(参照约束)时，我们需要判别参照表之间的顺序，确保重建时按照合理的顺序进行。你可以通过查询dba_constraints and dba_cons_columns来确定各表之间的顺序，不再详述。
