@@ -8,13 +8,8 @@ excerpt:  获取oracle建表的dll,获取oracle建index的dll
 * content
 {:toc}
 
-
-
-## 序 ##
-
-
 ---
-## 获得单个表和索引DDL语句的方法：##
+## 获得单个表和索引DDL语句的方法：
     
 set heading off;
 
@@ -40,7 +35,7 @@ spool off;
 
 
 
-    SQL> select dbms_metadata.get_ddl('TABLE','SZT_PQSO2','SHQSYS') from dual;　
+SQL> select dbms_metadata.get_ddl('TABLE','SZT_PQSO2','SHQSYS') from dual;
 
 CREATE TABLE "SHQSYS"."SZT_PQSO2" 
 
@@ -91,7 +86,7 @@ SQL> spool off;
 
 
 
-## 获得整个SCHEMA DDL语句的方法：##
+## 获得整个SCHEMA DDL语句的方法：
 
 
 
@@ -121,4 +116,4 @@ spool off;
 ---
 
 
-**需要注意的是，当我们的表中有外健(参照约束)时，我们需要判别参照表之间的顺序，确保重建时按照合理的顺序进行。你可以通过查询dba_constraints and dba_cons_columns来确定各表之间的顺序，不再详述。**
+需要注意的是，当我们的表中有外健(参照约束)时，我们需要判别参照表之间的顺序，确保重建时按照合理的顺序进行。你可以通过查询dba_constraints and dba_cons_columns来确定各表之间的顺序，不再详述。
