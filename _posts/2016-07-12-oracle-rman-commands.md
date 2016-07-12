@@ -8,7 +8,7 @@ excerpt: Oracle Rman 命令详解
 * content
 {:toc}
 
-# Oracle Rman 命令详解
+## Oracle Rman 命令详解
 
 ## 一、list常用命令总结备忘
 
