@@ -11,7 +11,7 @@ excerpt:  获取oracle建表的dll,获取oracle建index的dll
 ---
 ## 获得单个表和索引DDL语句的方法：
     
-set heading off;
+`set heading off;
 
 set echo off;
 
@@ -25,7 +25,7 @@ select dbms_metadata.get_ddl('TABLE','SZT_PQSO2','SHQSYS') from dual;
 
 select dbms_metadata.get_ddl('INDEX','INDXX_PQZJYW','SHQSYS') from dual;　
 
-spool off; 
+spool off; `
     
 
 
@@ -35,7 +35,7 @@ spool off;
 ---
 
 
-SQL> select dbms_metadata.get_ddl('TABLE','SZT_PQSO2','SHQSYS') from dual;
+`SQL> select dbms_metadata.get_ddl('TABLE','SZT_PQSO2','SHQSYS') from dual;
 
 CREATE TABLE "SHQSYS"."SZT_PQSO2" 
 
@@ -81,7 +81,7 @@ TABLESPACE "DATA1"
 
 SQL> 
 
-SQL> spool off; 
+SQL> spool off; `
 ---
 
 
@@ -91,7 +91,7 @@ SQL> spool off;
 
 
     
-set pagesize 0
+`set pagesize 0
 
 set long 90000
 
@@ -111,7 +111,7 @@ SELECT DBMS_METADATA.GET_DDL('INDEX',u.index_name)
 
 FROM USER_INDEXES u;
 
-spool off; 
+spool off; `
 
 ---
 
