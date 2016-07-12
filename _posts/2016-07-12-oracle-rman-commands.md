@@ -1,9 +1,15 @@
 ---
 layout: post
 title: "Oracle Rman命令详解"
+
 date: 2016/7/12 12:01:30 
+
 categories: Oracle
+
 excerpt: Rman常见命令详解
+---
+* content
+{:toc}
 ---
 
 #一、list常用命令总结备忘
