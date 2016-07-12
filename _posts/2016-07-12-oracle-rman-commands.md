@@ -2,17 +2,15 @@
 layout: post
 title:  "Oracle Rman 命令详解"
 date:   2016-07-12 12:54:05
-comments:true
 categories: oracle
 excerpt: Oracle Rman 命令详解
 ---
-
 * content
 {:toc}
 
-Oracle Rman 命令详解
----
-##一、list常用命令总结备忘
+# Oracle Rman 命令详解
+
+## 一、list常用命令总结备忘
 
 list命令列出控制文件、RMAN恢复目录中备份信息， 是我们对所有可见的数据库备份文件的一个最直观的了解的方法
 
@@ -168,7 +166,7 @@ list archivelog until sequence 12;
 
 
 
-##二、report常用命令总结备忘
+## 二、report常用命令总结备忘
 
 report用于判断数据库当前可恢复状态、以及数据库已有备份的信息。
 
@@ -237,7 +235,7 @@ report need backup recovery window of 2 days;
 
 
 
-##三、backup常用命令总结备忘
+## 三、backup常用命令总结备忘
 
 1、设置备份标记
 
@@ -341,7 +339,7 @@ backup database device type disk includ current controlfile;
 
 
 
-##四、configure常用命令总结备忘
+## 四、configure常用命令总结备忘
 
 1、显示当前的配置信息
 
