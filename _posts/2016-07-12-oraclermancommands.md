@@ -1,9 +1,9 @@
 ---
 layout: post
 title:  "Oracle Rman 命令详解"
-date:   2016-07-12 12:54:05
+date:   2016-07-12 10:06:05
 categories: oracle
-excerpt: Oracle Rman 命令详解
+excerpt: oracle rman 
 ---
 * content
 {:toc}
