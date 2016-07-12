@@ -2,14 +2,16 @@
 layout: post
 title:  "Oracle Rman 命令详解"
 date:   2016-07-12 12:54:05
+comments:true
 categories: oracle
-tags: oracle,rman
 excerpt: Oracle Rman 命令详解
 ---
 
 * content
 {:toc}
 
+Oracle Rman 命令详解
+---
 ##一、list常用命令总结备忘
 
 list命令列出控制文件、RMAN恢复目录中备份信息， 是我们对所有可见的数据库备份文件的一个最直观的了解的方法
