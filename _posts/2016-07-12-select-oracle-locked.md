@@ -7,7 +7,7 @@ excerpt: Oracle 锁查询及解锁
 ---
 
 ##1.查询被锁表
-```sql select   p.spid,a.serial#, c.object_name,b.session_id,b.oracle_username,b.os_user_name   from   v$process   p,v$session   a,   v$locked_object   b,all_objects   c   where   p.addr=a.paddr   and   a.process=b.process   and   c.object_id=b.object_id ;```
+`select   p.spid,a.serial#, c.object_name,b.session_id,b.oracle_username,b.os_user_name   from   v$process   p,v$session   a,   v$locked_object   b,all_objects   c   where   p.addr=a.paddr   and   a.process=b.process   and   c.object_id=b.object_id ;`
 
 ##2.解锁
 `alter system kill session  'sid,serial#';`
