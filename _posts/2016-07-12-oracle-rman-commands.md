@@ -1,18 +1,15 @@
 ---
 layout: post
 title: "Oracle Rman命令详解"
-
 date: 2016/7/12 12:01:30 
-
 categories: Oracle
-
 excerpt: Rman常见命令详解
 ---
 * content
 {:toc}
 ---
 
-#一、list常用命令总结备忘
+##一、list常用命令总结备忘
 
 list命令列出控制文件、RMAN恢复目录中备份信息， 是我们对所有可见的数据库备份文件的一个最直观的了解的方法
 
@@ -58,13 +55,13 @@ list backup of archivelog {all, from, high, like, logseq, low, scn, sequence, ti
 
 
 
-##1、List 当前RMAN所备份的数据库：
+###1、List 当前RMAN所备份的数据库：
 
 RMAN> list incarnation;
 
 汇总查询：--如果备份文件多的话多用这两个list命令可以对备份文件有个总体了解。
 
-###（1）list backup summary; --概述可用的备份
+####（1）list backup summary; --概述可用的备份
 
 B 表示backup
 
@@ -85,22 +82,22 @@ list backup of datafile n,n,n summary
 这些命令可以让我们对已有的备份文件有一个整体，直观的了解。
 
 
-###（2）list backup by file;--按照文件类型分别列出
+####（2）list backup by file;--按照文件类型分别列出
 
 分别为：数据文件列表、归档日志列表、控制文件列表、SPFILE列表
 
 
-###（3）list backup;
+####（3）list backup;
 
 这个命令列出已有备份集的详细信息。
 
 
-###（4）list expired backup;
+####（4）list expired backup;
 
 列出过期的备份文件
 
 
-###（5）list copy;
+####（5）list copy;
 
 列出copy文件
 
@@ -119,29 +116,29 @@ list copy of archivelog from scn 10000;
 list copy of archivelog until sequence 12;
 
 
-##2、List 相关文件的信息
+###2、List 相关文件的信息
 
 list backup of {archivelog, controlfile, database, datafile, spfile, tablespace};
 
 list backup of database; --full,incremental,tablespace,datafile
 
-###（1）服务器参数文件：
+####（1）服务器参数文件：
 
 list backup of spfile;
 
-###（2）控制文件：
+####（2）控制文件：
 
 list backup of controlfile;
 
-###（3）数据文件：
+####（3）数据文件：
 
 list backup of datafle n,n,n,n;
 
-###（4）表空间：
+####（4）表空间：
 
 list backup of tablespace tablespace_name;--表空间对应的backup
 
-###（5）归档日志：
+####（5）归档日志：
 
 list backup of archivelog {all, from, high, like, logseq, low, scn, sequence, time, until};
 
@@ -168,7 +165,7 @@ list archivelog until sequence 12;
 
 ---
 
-#二、report常用命令总结备忘
+##二、report常用命令总结备忘
 
 report用于判断数据库当前可恢复状态、以及数据库已有备份的信息。
 
@@ -190,22 +187,22 @@ report need backup redundancy=3; --报告冗余次数小于3的数据文件。
 
 report need backup recovery window of 2 days;
 
-##（1）report schema;
+###（1）report schema;
 
 报告数据库模式
 
 
-##（2）report obsolete;
+###（2）report obsolete;
 
 报告已丢弃的备份集（配置了保留策略）。
 
 
-##（3）report unrecoverable;
+###（3）report unrecoverable;
 
 报告当前数据库中不可恢复的数据文件（即没有这个数据文件的备份、或者该数据文件的备份已经过期）
 
 
-##（4）report need backup;
+###（4）report need backup;
 
 报告需要备份的数据文件（根据条件不同）
 
@@ -237,16 +234,16 @@ report need backup recovery window of 2 days;
 
 
 
-#三、backup常用命令总结备忘
+##三、backup常用命令总结备忘
 
-##1、设置备份标记
+###1、设置备份标记
 
 backup database tag='full_bak1';
 
 注：每个标记必须唯一，相同的标记可以用于多个备份只还原最新的备份。
 
 
-##2、设置备份集大小（一次备份的所有结果为一个备份集，要注意备份集大小）
+###2、设置备份集大小（一次备份的所有结果为一个备份集，要注意备份集大小）
 
 backup database maxsetsize=100m tag='datafile1';
 
@@ -255,7 +252,7 @@ backup database maxsetsize=100m tag='datafile1';
 RMAN-06183: datafile or datafile copy larger than MAXSETSIZE: file# 1 /data/oradata/system01.dbf
 
 
-##3、设置备份片大小（磁带或文件系统限制）
+###3、设置备份片大小（磁带或文件系统限制）
 
 run {
 
@@ -276,26 +273,26 @@ Configure channel device type disk maxpiecesize 100 m;
 configure channel device type disk clear;
 
 
-##4、备份集的保存策略
+###4、备份集的保存策略
 
 backup database keep forever;                  --永久保留备份文件
 
 backup database keep until time='sysdate+30'; --保存备份30天
 
 
-##5、重写configure exclude命令
+###5、重写configure exclude命令
 
 backup databas noexclude keep forever tag='test backup';
 
 
-##6、检查数据库错误
+###6、检查数据库错误
 
 backup validate database;
 
 使用RMAN来扫描数据库的物理/逻辑错误，并不执行实际备份。
 
 
-##7、跳过脱机，不可存取或只读文件
+###7、跳过脱机，不可存取或只读文件
 
 backup database skip readonly;
 
@@ -306,44 +303,44 @@ backup database skip inaccessible;
 backup database ship readonly skip offline ship inaccessible;
 
 
-##8、强制备份
+###8、强制备份
 
 backup database force;
 
 
-##9、基于上次备份时间备份数据文件
+###9、基于上次备份时间备份数据文件
 
-###1>只备份添加的新数据文件
+####1>只备份添加的新数据文件
 
 backup database not backed up;
 
-###2>备份"在限定时间周期内"没有被备份的数据文件
+####2>备份"在限定时间周期内"没有被备份的数据文件
 
 backup database not backed up since time='sysdate-2';
 
 
-##10、备份操作期间检查逻辑错误
+###10、备份操作期间检查逻辑错误
 
 backup check logical database;
 
 backup validate check logical database;
 
 
-##11、生成备份副本
+###11、生成备份副本
 
 backup database copies=2;
 
 
-##12、备份控制文件
+###12、备份控制文件
 
 backup database device type disk includ current controlfile;
 
 
 
 
-#四、configure常用命令总结备忘
+##四、configure常用命令总结备忘
 
-##1、显示当前的配置信息
+###1、显示当前的配置信息
 
 （1）RMAN> show all;
 
@@ -383,7 +380,7 @@ NCFDBA.ORA'; # default
 SQL> select name,value from v$rman_configuration;
 
 
-##2、常用的configure选项
+###2、常用的configure选项
 
 （1）保存策略 （retention policy）
 
