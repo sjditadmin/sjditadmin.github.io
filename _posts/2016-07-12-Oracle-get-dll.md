@@ -2,18 +2,21 @@
 layout: post
 title:  "Oracle轻松取得建表和索引的DDL语句"
 date:   2016/7/12 10:31:58 
-categories: oracle
-excerpt: oracle,dll,create table sql
+categories:Oracle
+excerpt: 获取oracle建表的dll,获取oracle建index的dll
 ---
 * content
 {:toc}
-##序
+
+
+
+## 序
 
 我们都知道在9i之前，要想获得建表和索引的语句是一件很麻烦的事。我们可以通过export with rows=no来得到，但它的输出因为格式的问题并不能直接拿来用。而另一种方法就是写复杂的脚本来查询数据字典，但这对于一稍微复杂的对象，如IOT和嵌套表等，还是无法查到。
 
 从数据字典中获得DDL语句是经常要用的，特别是在系统升级/重建的时候。在Oracle 9i中，我们可以直接通过执行dbms_metadata从数据字典中查处DDL语句。使用这个功能强大的工具，我们可以获得单个对象或整个SCHEMA的DDL语句。最好不过的是因为它使用起来很简单。
 ---
-##1、获得单个表和索引DDL语句的方法：
+## 获得单个表和索引DDL语句的方法：
     
     set heading off;
     
@@ -90,7 +93,7 @@ excerpt: oracle,dll,create table sql
 
 
 
-##2、获得整个SCHEMA DDL语句的方法：
+## 获得整个SCHEMA DDL语句的方法：
 
 
 
@@ -105,8 +108,7 @@ excerpt: oracle,dll,create table sql
     
     spool get_schema.sql 
     
-    connect ***/***@***
-    ;
+    connect ***/***@***;
     
     SELECT DBMS_METADATA.GET_DDL('TABLE',u.table_name)
     
