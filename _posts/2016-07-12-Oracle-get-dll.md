@@ -1,9 +1,9 @@
 ---
 layout: post
 title:  "Oracle轻松取得建表和索引的DDL语句"
-date:   2016/7/12 10:31:58 
-categories:Oracle
-excerpt: 获取oracle建表的dll,获取oracle建index的dll
+date:   2016-07-12 10:31:58 
+categories: Oracle
+excerpt:  获取oracle建表的dll,获取oracle建index的dll
 ---
 * content
 {:toc}
