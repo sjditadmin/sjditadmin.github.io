@@ -56,7 +56,7 @@ list backup of archivelog {all, from, high, like, logseq, low, scn, sequence, ti
 
 
 
-1、List 当前RMAN所备份的数据库：
+### 1、List 当前RMAN所备份的数据库：
 
 RMAN> list incarnation;
 
@@ -117,7 +117,7 @@ list copy of archivelog from scn 10000;
 list copy of archivelog until sequence 12;
 
 
-2、List 相关文件的信息
+###2、List 相关文件的信息
 
 list backup of {archivelog, controlfile, database, datafile, spfile, tablespace};
 
