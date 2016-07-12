@@ -3,7 +3,7 @@ layout: post
 title:  "Oracle Rman 命令详解"
 date:   2016-07-12 10:06:05
 categories: oracle
-excerpt: oracle rman 
+description: oracle rman 
 ---
 * content
 {:toc}
