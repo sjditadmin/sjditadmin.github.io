@@ -7,7 +7,7 @@ excerpt: oracle spool
 ---
 SPOOL可以把Oracle客户端SQLPLUS的输出导入到一个文本中，可以导出html、CSV等形式，其语法如下：
 
-*spool <filename> [rep/append]*
+spool <filename> [rep/append]
 
 屏幕输出保留到指定文件中，如果文件存在想替换内容使用replace,追加内容到文件中使用append
 关闭并把输出发送到系统打印机打印用spool out，不过这个命令在某些系统不能用
