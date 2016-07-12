@@ -32,7 +32,7 @@ spool off;
 
 下面是输出。我们只要把建表/索引语句取出来在后面加个分号就可以直接运行了。
 
-
+---
 
 
 SQL> select dbms_metadata.get_ddl('TABLE','SZT_PQSO2','SHQSYS') from dual;
@@ -101,7 +101,7 @@ set echo off
 
 spool get_schema.sql 
 
-connect ***/***@***;
+connect username/password@oracle_sid;
 
 SELECT DBMS_METADATA.GET_DDL('TABLE',u.table_name)
 
