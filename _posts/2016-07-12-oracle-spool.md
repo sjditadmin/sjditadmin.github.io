@@ -38,7 +38,7 @@ SPOOL可以把Oracle客户端SQLPLUS的输出导入到一个文本中，可以�
     group by tablespace_name) b
     where a.tablespace_name=b.tablespace_name order by used_rate desc;
     spool off
+    
+ 最终导出结果如下：
 
-最终导出结果如下：
-
-![](http://i.imgur.com/horuUZQ.jpg)
+ ![](http://i.imgur.com/horuUZQ.jpg) 
