@@ -62,6 +62,7 @@ sudo sysdig -pc -c topconns container.name=wordpress1
 显示wordpress1容器里所有命令执行的情况
 
 sudo sysdig -pc -c spy_users container.name=wordpress1
+
 ## 应用
 
 查看机器所有的HTTP请求
@@ -145,6 +146,8 @@ sysdig -p "%12user.name %6proc.pid %12proc.name %3fd.num %fd.typechar %fd.name" 
 Print the file I/O calls that have a latency greater than 1ms:
 
 sysdig -c fileslower 1
+
+
 ## 安全
 
 Show the directories that the user "root" visits
