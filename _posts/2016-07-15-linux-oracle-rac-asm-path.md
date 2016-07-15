@@ -7,7 +7,7 @@ excerpt: Linux多路径问题造成rac asm无法识别磁盘组
 ---
 
 
-##Linux多路径问题造成rac asm无法识别磁盘组
+## Linux多路径问题造成rac asm无法识别磁盘组
 
 * 重启后，无法在当前启动实例挂载磁盘组USDATA01
 该磁盘组对应的裸盘为/dev/raw/raw4。这个裸盘正常对应多路径的mpathf盘（可使用ls -l /dev/mapper查看对应磁盘号）
