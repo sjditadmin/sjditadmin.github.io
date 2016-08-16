@@ -2,7 +2,7 @@
 layout: post
 title:  "crontab 使用说明"
 date:   2016-08-16
-categories: linux
+categories: Linux
 excerpt: crontab 使用说明 
 ---
 
