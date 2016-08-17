@@ -7,18 +7,27 @@ categories: docker
 ---
 # Docker 安装Oracle database 11.2.0.4实录
 ## docker 安装
+
 * docker image 安装
+
 `docker pull oraclelinux:6.7`
 * docker 容器启动
+
 `sudo docker run -t -d -h oracledb --name oracledb11g  oraclelinux:6.7`
 * 进入容器
+
 `docker-enter oracledb11g`
 
 ## Oracle 环境准备
+
 * 安装必要的包
+
 `yum install -y wget unzip vim oracle-rdbms-server-11gR2-preinstall`
+
 * 修改必要的参数
+
   1. 修改hosts
+
 ```
 vim /etc/hosts
 127.0.0.1       oracledb localhost
@@ -29,14 +38,18 @@ ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 172.17.0.2      oracledb
 ```
+
   1. 修改network
+
 ```
 vim /etc/sysconfig/network
 NETWORKING=yes
 HOSTNAME=oracledb
 NOZEROCONF=yes```
+
   1. 修改oracle用户变量
-```shell
+
+```
 vim /home/oracle/.bash_profile
 添加如下参数
 export NLS_LANG="Simplified Chinese_china".ZHS16GBK
@@ -48,6 +61,7 @@ export PATH
 export LANG=en```
 
 * 创建工作目录并授权
+
 ```
 mkdir -p /setup --安装介质目录 
 mkdir -p /oracle --oracle安装目录 
@@ -57,8 +71,11 @@ chmod -R 775 /setup
 chmod -R 775 /oracle```
 
 * 在宿主机搭建http服务器传入oracle database 安装介质
+
  `python -m SimpleHTTPServer 9090`
+
 * 在docker容器里面通过wget下载安装介质并解压
+
 ```
 su - oracle
 cd /setup
@@ -67,11 +84,15 @@ wget -c http://172.17.0.1:9090/p13390677_112040_Linux-x86-64_2of7.zip
 unzip p13390677_112040_Linux-x86-64_1of7.zip
 unzip p13390677_112040_Linux-x86-64_2of7.zip
 ``` 
+
 * 修改静默安装参数文件
+
  此文件在/setup/database/response下，有db_install.rsp dbca.rsp netca.rsp三个文件
  内容如下
  db_install.rsp
- ```oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v11_2_0
+
+ ```
+oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v11_2_0
 oracle.install.option=INSTALL_DB_SWONLY
 ORACLE_HOSTNAME=oracledb
 UNIX_GROUP_NAME=oinstall
@@ -125,8 +146,11 @@ oracle.installer.autoupdates.downloadUpdatesLoc=
 AUTOUPDATES_MYORACLESUPPORT_USERNAME=
 AUTOUPDATES_MYORACLESUPPORT_PASSWORD=
 ```
+
 dbca.rsp
-```[GENERAL]
+
+```
+[GENERAL]
 RESPONSEFILE_VERSION = "11.2.0"
 OPERATION_TYPE = "createDatabase"
 [CREATEDATABASE]
@@ -162,7 +186,9 @@ DB_UNIQUE_NAME = "orcl11g.us.oracle.com"
 INSTANCENAME = "orcl11g"
 SYSDBAUSERNAME = "sys"
 ```
+
 netca.rsp
+
 ```
 [GENERAL]
 RESPONSEFILE_VERSION="11.2"
@@ -181,7 +207,10 @@ NSN_NAMES={"EXTPROC_CONNECTION_DATA"}
 NSN_SERVICE={"PLSExtProc"}
 NSN_PROTOCOLS={"TCP;HOSTNAME;1521"}
 ``` 
+
 * 静默安装(oracle用户，在/setup/database/目录下执行)
+
 1. 安装oracle软件
+
   `./runInstaller -silent -noconfig -ignorePrereq -responseFile /setup/database/response/db_install.rsp`
   
