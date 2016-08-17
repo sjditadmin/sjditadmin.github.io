@@ -11,9 +11,11 @@ categories: docker
 * docker image 安装
 
 `docker pull oraclelinux:6.7`
+
 * docker 容器启动
 
 `sudo docker run -t -d -h oracledb --name oracledb11g  oraclelinux:6.7`
+
 * 进入容器
 
 `docker-enter oracledb11g`
@@ -46,6 +48,7 @@ vim /etc/sysconfig/network
 NETWORKING=yes
 HOSTNAME=oracledb
 NOZEROCONF=yes```
+
 
   1. 修改oracle用户变量
 
@@ -91,7 +94,7 @@ unzip p13390677_112040_Linux-x86-64_2of7.zip
  内容如下
  db_install.rsp
 
- ```
+```
 oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v11_2_0
 oracle.install.option=INSTALL_DB_SWONLY
 ORACLE_HOSTNAME=oracledb
