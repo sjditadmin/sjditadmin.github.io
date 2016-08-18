@@ -10,26 +10,25 @@ categories: docker
 
 * docker image 安装
 
-`docker pull oraclelinux:6.7`
+  `docker pull oraclelinux:6.7`
 
-* docker 容器启动
+* docker 容器启动--需指定--shm-size 1G,否则静默安装会报错
 
-`sudo docker run -t -d -h oracledb --name oracledb11g  oraclelinux:6.7`
+  `sudo docker run -t -d -h oracledb --shm-size 1g --name oracledb11g  oraclelinux:6.7`
 
 * 进入容器
 
-`docker-enter oracledb11g`
+  `docker-enter oracledb11g`
 
 ## Oracle 环境准备
 
 * 安装必要的包
 
-`yum install -y wget unzip vim oracle-rdbms-server-11gR2-preinstall`
+  `yum install -y wget unzip vim oracle-rdbms-server-11gR2-preinstall`
 
 * 修改必要的参数
 
   1. 修改hosts
-
 ```
 vim /etc/hosts
 127.0.0.1       oracledb localhost
@@ -42,16 +41,12 @@ ff02::2 ip6-allrouters
 ```
 
   1. 修改network
-
 ```
 vim /etc/sysconfig/network
 NETWORKING=yes
 HOSTNAME=oracledb
 NOZEROCONF=yes```
-
-
   1. 修改oracle用户变量
-
 ```
 vim /home/oracle/.bash_profile
 添加如下参数
@@ -64,8 +59,8 @@ export PATH
 export LANG=en```
 
 * 创建工作目录并授权
-
-```
+ 
+    ```
 mkdir -p /setup --安装介质目录 
 mkdir -p /oracle --oracle安装目录 
 chown -R oracle:oinstall /setup
@@ -79,7 +74,7 @@ chmod -R 775 /oracle```
 
 * 在docker容器里面通过wget下载安装介质并解压
 
-```
+  ```
 su - oracle
 cd /setup
 wget -c http://172.17.0.1:9090/p13390677_112040_Linux-x86-64_1of7.zip
@@ -94,7 +89,7 @@ unzip p13390677_112040_Linux-x86-64_2of7.zip
  内容如下
  db_install.rsp
 
-```
+   ```
 oracle.install.responseFileVersion=/oracle/install/rspfmt_dbinstall_response_schema_v11_2_0
 oracle.install.option=INSTALL_DB_SWONLY
 ORACLE_HOSTNAME=oracledb
@@ -150,9 +145,8 @@ AUTOUPDATES_MYORACLESUPPORT_USERNAME=
 AUTOUPDATES_MYORACLESUPPORT_PASSWORD=
 ```
 
-dbca.rsp
-
-```
+  dbca.rsp
+  ```
 [GENERAL]
 RESPONSEFILE_VERSION = "11.2.0"
 OPERATION_TYPE = "createDatabase"
@@ -190,9 +184,9 @@ INSTANCENAME = "orcl11g"
 SYSDBAUSERNAME = "sys"
 ```
 
-netca.rsp
+  netca.rsp
 
-```
+  ```
 [GENERAL]
 RESPONSEFILE_VERSION="11.2"
 CREATE_TYPE="CUSTOM"
@@ -213,7 +207,30 @@ NSN_PROTOCOLS={"TCP;HOSTNAME;1521"}
 
 * 静默安装(oracle用户，在/setup/database/目录下执行)
 
-1. 安装oracle软件
+  1. 安装oracle软件
+  ```./runInstaller -silent -noconfig -ignorePrereq -responseFile /setup/database/response/db_install.rsp```
+   安装完成后，切换到root用户执行
+  ```
+  /oracle/oraInventory/orainstRoot.sh
+/oracle/11.2.0.4/db_1/root.sh
+```
+ 1. 创建数据库
+  `dbca -silent -responseFile /setup/database/response/dbca.rsp ` 
+  这里要注意一下，11.2.0.4的一个BUG,要在数据库创建到70左右的时候用执行如下操作
+  ```
+  sqlplus / as sysdba
+  alter system set JAVA_JIT_ENABLED=FALSE```
+  否则会在76%的时候hang住，报ORA-29516错误
+  2. 创建监听
+  `netca -silent responseFile /setup/database/response/netca.rsp`
 
-  `./runInstaller -silent -noconfig -ignorePrereq -responseFile /setup/database/response/db_install.rsp`
+* 清理环境
+  删除 /setup目录
+  删除/tmp目录
+  删除/oracle/diag/rdbms/oracledb/oracledb/trace/文件
+  yum clean all
   
+* 生成镜像
+  `sudo docker commit -m "oracle database 11.2.0.4 on oracle linux 6.7" 52b7bba778a1 oracledb11g:latest`
+* 启动容器
+`sudo docker run -dt -h oracledb --name oracle -p 1521:1521 oracledb11g`
