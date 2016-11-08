@@ -27,7 +27,7 @@ categories: docker
 
 * 修改必要的参数
 
-  1. 修改hosts
+1. 修改hosts
 ```
 vim /etc/hosts
 127.0.0.1       oracledb localhost
@@ -39,7 +39,7 @@ ff02::2 ip6-allrouters
 172.17.0.2      oracledb
 ```
 
-  1. 修改network
+2. 修改network
 ```
 vim /etc/sysconfig/network
 NETWORKING=yes
@@ -47,7 +47,7 @@ HOSTNAME=oracledb
 NOZEROCONF=yes
 ```
 
-  1. 修改oracle用户变量
+3. 修改oracle用户变量
 ```
 vim /home/oracle/.bash_profile
 添加如下参数
@@ -212,7 +212,7 @@ NSN_PROTOCOLS={"TCP;HOSTNAME;1521"}
 
 * 静默安装(oracle用户，在/setup/database/目录下执行)
 
-  1. 安装oracle软件
+1. 安装oracle软件
   ```./runInstaller -silent -noconfig -ignorePrereq -responseFile /setup/database/response/db_install.rsp
   ```
   
@@ -222,17 +222,16 @@ NSN_PROTOCOLS={"TCP;HOSTNAME;1521"}
   /oracle/oraInventory/orainstRoot.sh
 /oracle/11.2.0.4/db_1/root.sh
 ```
- 1. 创建数据库
+2. 创建数据库
   `dbca -silent -responseFile /setup/database/response/dbca.rsp ` 
-  这里要注意一下，11.2.0.4的一个BUG,要在数据库创建到70左右的时候用执行如下操作
+这里要注意一下，11.2.0.4的一个BUG,要在数据库创建到70左右的时候用执行如下操作
   ```
   sqlplus / as sysdba
   alter system set JAVA_JIT_ENABLED=FALSE
   ```
-  
-  否则会在76%的时候hang住，报ORA-29516错误
-  2. 创建监听
-  `netca -silent responseFile /setup/database/response/netca.rsp`
+否则会在76%的时候hang住，报ORA-29516错误
+3. 创建监听
+`netca -silent responseFile /setup/database/response/netca.rsp`
 
 * 清理环境
   删除 /setup目录
@@ -242,5 +241,6 @@ NSN_PROTOCOLS={"TCP;HOSTNAME;1521"}
   
 * 生成镜像
 `sudo docker commit -m "oracle database 11.2.0.4 on oracle linux 6.7" 52b7bba778a1 oracledb11g:latest`
+
 * 启动容器
 `sudo docker run -dt -h oracledb --name oracle -p 1521:1521 oracledb11g`
