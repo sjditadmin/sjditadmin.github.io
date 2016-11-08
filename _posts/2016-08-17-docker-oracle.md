@@ -10,21 +10,20 @@ categories: docker
 
 * docker image 安装
 
-  `docker pull oraclelinux:6.7`
+`docker pull oraclelinux:6.7`
 
 * docker 容器启动--需指定--shm-size 1G,否则静默安装会报错
 
-  `sudo docker run -t -d -h oracledb --shm-size 1g --name oracledb11g  oraclelinux:6.7`
+`sudo docker run -t -d -h oracledb --shm-size 1g --name oracledb11g  oraclelinux:6.7`
 
 * 进入容器
 
-  `docker-enter oracledb11g`
+`docker-enter oracledb11g`
 
 ## Oracle 环境准备
 
 * 安装必要的包
-
-  `yum install -y wget unzip vim oracle-rdbms-server-11gR2-preinstall`
+`yum install -y wget unzip vim oracle-rdbms-server-11gR2-preinstall`
 
 * 修改必要的参数
 
@@ -45,7 +44,9 @@ ff02::2 ip6-allrouters
 vim /etc/sysconfig/network
 NETWORKING=yes
 HOSTNAME=oracledb
-NOZEROCONF=yes```
+NOZEROCONF=yes
+```
+
   1. 修改oracle用户变量
 ```
 vim /home/oracle/.bash_profile
@@ -56,21 +57,24 @@ export ORACLE_HOME=/oracle/11.2.0.4/db_1
 export ORACLE_SID=oracledb
 PATH=$PATH:$HOME/bin:$ORACLE_HOME/bin
 export PATH
-export LANG=en```
+export LANG=en
+```
+
 
 * 创建工作目录并授权
- 
-    ```
+    
+```
 mkdir -p /setup --安装介质目录 
 mkdir -p /oracle --oracle安装目录 
 chown -R oracle:oinstall /setup
 chown -R oracle:oinstall /oracle
 chmod -R 775 /setup
-chmod -R 775 /oracle```
+chmod -R 775 /oracle
+```
 
 * 在宿主机搭建http服务器传入oracle database 安装介质
 
- `python -m SimpleHTTPServer 9090`
+`python -m SimpleHTTPServer 9090`
 
 * 在docker容器里面通过wget下载安装介质并解压
 
@@ -100,7 +104,8 @@ ORACLE_HOME=/oracle/11.2.0.4/db_1
 ORACLE_BASE=/oracle
 oracle.install.db.InstallEdition=EE
 oracle.install.db.EEOptionsSelection=false
-oracle.install.db.optionalComponents=oracle.rdbms.partitioning:11.2.0.4.0,oracle.oraolap:11.2.0.4.0,oracle.rdbms.dm:11.2.0.4.0,oracle.rdbms.dv:11.2.0.4.0,oracle.rdbms.lbac:11.2.0.4.0,oracle.rdbms.rat:11.2.0.4.0
+oracle.install.db.optionalComponents=oracle.rdbms.partitioning:11.2.0.4.0,oracle.oraolap:11.2.0.4.0,
+oracle.rdbms.dm:11.2.0.4.0,oracle.rdbms.dv:11.2.0.4.0,oracle.rdbms.lbac:11.2.0.4.0,oracle.rdbms.rat:11.2.0.4.0
 oracle.install.db.DBA_GROUP=oinstall
 oracle.install.db.OPER_GROUP=dba
 oracle.install.db.CLUSTER_NODES=
@@ -208,8 +213,11 @@ NSN_PROTOCOLS={"TCP;HOSTNAME;1521"}
 * 静默安装(oracle用户，在/setup/database/目录下执行)
 
   1. 安装oracle软件
-  ```./runInstaller -silent -noconfig -ignorePrereq -responseFile /setup/database/response/db_install.rsp```
-   安装完成后，切换到root用户执行
+  ```./runInstaller -silent -noconfig -ignorePrereq -responseFile /setup/database/response/db_install.rsp
+  ```
+  
+安装完成后，切换到root用户执行
+   
   ```
   /oracle/oraInventory/orainstRoot.sh
 /oracle/11.2.0.4/db_1/root.sh
@@ -219,7 +227,9 @@ NSN_PROTOCOLS={"TCP;HOSTNAME;1521"}
   这里要注意一下，11.2.0.4的一个BUG,要在数据库创建到70左右的时候用执行如下操作
   ```
   sqlplus / as sysdba
-  alter system set JAVA_JIT_ENABLED=FALSE```
+  alter system set JAVA_JIT_ENABLED=FALSE
+  ```
+  
   否则会在76%的时候hang住，报ORA-29516错误
   2. 创建监听
   `netca -silent responseFile /setup/database/response/netca.rsp`
@@ -231,6 +241,6 @@ NSN_PROTOCOLS={"TCP;HOSTNAME;1521"}
   yum clean all
   
 * 生成镜像
-  `sudo docker commit -m "oracle database 11.2.0.4 on oracle linux 6.7" 52b7bba778a1 oracledb11g:latest`
+`sudo docker commit -m "oracle database 11.2.0.4 on oracle linux 6.7" 52b7bba778a1 oracledb11g:latest`
 * 启动容器
 `sudo docker run -dt -h oracledb --name oracle -p 1521:1521 oracledb11g`
