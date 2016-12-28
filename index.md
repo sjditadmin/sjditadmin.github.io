@@ -2,6 +2,6 @@
 layout: frontpage
 ---
 
-## Share your knowledge with the world
+## Share your knowledge with the world !
 
 
