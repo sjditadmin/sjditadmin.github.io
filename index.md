@@ -2,6 +2,6 @@
 layout: frontpage
 ---
 
-## Welcome to my website
+## Share your knowledge with the world
 
 
